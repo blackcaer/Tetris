@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-namespace tetris
+namespace Tetris
 {
     public class GameGrid
     {
