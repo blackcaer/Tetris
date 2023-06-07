@@ -31,6 +31,15 @@ namespace Tetris
         {
             return blocks[random.Next(blocks.Length)];
         }
+        public Block GetAndUpdate()
+        {
+            Block block = NextBlock;
+            do
+            {
+                NextBlock = blocks[random.Next(blocks.Length)];
+            }while (NextBlock.Id != block.Id);
 
+            return block;
+        }
     }
 }

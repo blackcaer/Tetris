@@ -55,7 +55,6 @@ namespace Tetris
             }
             return true;
         }
-
         private void ClearRow(int r)
         {
             for (int i = 0; i < Columns; i++)
@@ -64,11 +63,11 @@ namespace Tetris
             }
             
         }
-        public void MoveRowDown(int r,int howMany)
+        private void MoveRowDown(int r,int howMany)
         {
             for (int c = 0;c < Columns;c++)
             {
-                grid[r- howMany, c- howMany] = grid[r, c];
+                grid[r - howMany, c - howMany] = grid[r, c];
                 grid[r, c] = 0;
             } 
         }

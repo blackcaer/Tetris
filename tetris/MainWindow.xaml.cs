@@ -23,8 +23,21 @@ namespace Tetris
         public MainWindow()
         {
             InitializeComponent();
-            var g = new GameGrid(10,10);
-            g.MoveRowDown(2, 2);
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void GameCanvas_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
