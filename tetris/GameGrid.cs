@@ -61,7 +61,7 @@ namespace Tetris
             {
                 grid[r, i] = 0;
             }
-            
+
         }
         private void MoveRowDown(int r,int howMany)
         {

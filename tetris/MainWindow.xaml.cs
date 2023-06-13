@@ -34,14 +34,14 @@ namespace Tetris
 
         private readonly ImageSource[] blockImages = new ImageSource[]
         {
-            new BitmapImage(new Uri("Assets/Tile-Empty.png",UriKind.Relative)),
-            new BitmapImage(new Uri("Assets/Tile-I.png",UriKind.Relative)),
-            new BitmapImage(new Uri("Assets/Tile-J.png",UriKind.Relative)),
-            new BitmapImage(new Uri("Assets/Tile-L.png",UriKind.Relative)),
-            new BitmapImage(new Uri("Assets/Tile-O.png",UriKind.Relative)),
-            new BitmapImage(new Uri("Assets/Tile-S.png",UriKind.Relative)),
-            new BitmapImage(new Uri("Assets/Tile-T.png",UriKind.Relative)),
-            new BitmapImage(new Uri("Assets/Tile-Z.png",UriKind.Relative))
+            new BitmapImage(new Uri("Assets/Block-Empty.png",UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/Block-I.png",UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/Block-J.png",UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/Block-L.png",UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/Block-O.png",UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/Block-S.png",UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/Block-T.png",UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/Block-Z.png",UriKind.Relative))
         };
 
         private readonly Image[,] imageControls;
@@ -68,7 +68,7 @@ namespace Tetris
                         Height = cellSize
                     };
 
-                    Canvas.SetTop(imageControl, (r - 2) * cellSize);
+                    Canvas.SetTop(imageControl, (r - 2) * cellSize +10);
                     Canvas.SetLeft(imageControl, c * cellSize);
                     GameCanvas.Children.Add(imageControl);
                     imageControls[r,c] = imageControl;
@@ -98,9 +98,29 @@ namespace Tetris
         {
             DrawGrid(gameState.GameGrid);
             DrawBlock(gameState.CurrentBlock);
+            DrawNextBlock(gameState.BlockQueue);
+            ScoreText.Text = $"Score: {gameState.Score}";
         }
 
+        private void DrawNextBlock(BlockQueue blockQueue)
+        {
+            Block next = blockQueue.NextBlock;
+            NextImage.Source = blockImages[next.Id];
+        }
+        private async Task GameLoop()
+        {
+            Draw(gameState);
+            while (!gameState.GameOver)
+            {
+                await Task.Delay(500);
+                gameState.MoveBlockDown();
+                Draw(gameState);
+                
+            }
+            FinalScoreText.Text = $"Score: {gameState.Score}";
+            GameOverMenu.Visibility = Visibility.Visible;
 
+        }
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (gameState.GameOver)
@@ -133,14 +153,16 @@ namespace Tetris
 
         }
 
-        private void GameCanvas_Loaded(object sender, RoutedEventArgs e)
+        private async void GameCanvas_Loaded(object sender, RoutedEventArgs e)
         {
-            Draw(gameState);
+            await GameLoop();
         }
 
-        private void PlayAgain_Click(object sender, RoutedEventArgs e)
+        private async void PlayAgain_Click(object sender, RoutedEventArgs e)
         {
-            return;
+            gameState = new GameState();
+            GameOverMenu.Visibility = Visibility.Hidden;
+            await GameLoop();
         }
     }
 }
