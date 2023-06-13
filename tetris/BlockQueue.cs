@@ -37,7 +37,7 @@ namespace Tetris
             do
             {
                 NextBlock = blocks[random.Next(blocks.Length)];
-            }while (NextBlock.Id != block.Id);
+            }while (NextBlock.Id == block.Id);
 
             return block;
         }

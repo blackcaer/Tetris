@@ -67,7 +67,7 @@ namespace Tetris
         {
             for (int c = 0;c < Columns;c++)
             {
-                grid[r - howMany, c - howMany] = grid[r, c];
+                grid[r + howMany, c] = grid[r, c];
                 grid[r, c] = 0;
             } 
         }
@@ -85,7 +85,6 @@ namespace Tetris
                 {
                     ClearRow(r);
                     cleared++;
-                    continue;
                 }else if (cleared>0)
                 {
                     MoveRowDown(r, cleared);

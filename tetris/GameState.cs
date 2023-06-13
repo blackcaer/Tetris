@@ -109,7 +109,7 @@ namespace Tetris
             if (!BlockFits())
             {
                 CurrentBlock.Move(-1, 0);
-                PlaceBlock();
+                PlaceBlock(); 
             }
         }
     }
